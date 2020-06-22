@@ -50,7 +50,7 @@ public class UserController {
         findUser.setVerified(true);
         userRepo.save(findUser);
 
-        return "terverifikasi";
+        return "<h1> <center> Dear " + findUser.getUsername() + ", Akun anda telah terverifikasi </center> </h1>";
     }
 
     @PostMapping
@@ -64,10 +64,8 @@ public class UserController {
         String encodedPassword = pwEncoder.encode(user.getPassword());
 
         user.setPassword(encodedPassword);
-
-        String url = "http://localhost:8080/users/verifiedMail?username=" + user.getUsername();
         
-        emailUtil.sendEmail(user.getEmail(), "Regis Akun Sukses",
+        emailUtil.sendEmail(user.getEmail(), "Registrasi Akun Sukses",
                 "<h1> Sukses Buat Akun ! </h1> \n mohon klik <a href=\"http://localhost:8080/users/verifiedMail?username=" + user.getUsername() + "\">link</a> untuk memverifikasi akun anda");
         
         User savedUser = userRepo.save(user);
